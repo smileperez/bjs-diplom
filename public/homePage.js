@@ -1,8 +1,7 @@
-const HomePageObject = new LogoutButton();
+const LogoutButtonObject = new LogoutButton();
+// console.log(LogoutButtonObject);
 
-console.log(HomePageObject);
-
-HomePageObject.action = function() {
+LogoutButtonObject.action = function() {
     
     ApiConnector.logout(response => {
 		
@@ -12,6 +11,16 @@ HomePageObject.action = function() {
 		} else { 
             alert(response.error);
 		}
+
 	})	
-    
 }
+
+	ApiConnector.current(response => {
+		// console.log(response);
+		if (response.success) {
+			ProfileWidget.showProfile(response.data);
+		} else { 
+			alert(response.error);
+		}
+
+	})
