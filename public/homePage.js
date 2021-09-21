@@ -47,3 +47,91 @@ function getStocksEveryMin() {
 }
 getStocksEveryMin();
 setInterval(getStocksEveryMin, 60000);
+
+
+// Операции с деньгами
+const MoneyManagerObject = new MoneyManager();
+// console.log(MoneyManagerObject);
+
+MoneyManagerObject.addMoneyCallback = function(data) {
+	
+	ApiConnector.addMoney(data, response => {
+		if (response.success) {
+			ProfileWidget.showProfile(response.data);
+			console.log('Баланс успешно пополнен');
+		} else { 
+            alert(response.error);
+		}
+	})
+
+}
+
+MoneyManagerObject.conversionMoneyCallback = function(data) {
+
+	ApiConnector.convertMoney(data, response => {
+		if (response.success) {
+			ProfileWidget.showProfile(response.data);
+			console.log('Валюта успешно конвертирована успешно');
+		} else { 
+            alert(response.error);
+		}
+	})
+
+}
+
+MoneyManagerObject.sendMoneyCallback = function(data) {
+
+	ApiConnector.transferMoney(data, response => {
+		if (response.success) {
+			ProfileWidget.showProfile(response.data);
+			console.log('Валюта успешно переведна');
+		} else { 
+            alert(response.error);
+		}
+	})
+
+}
+
+const FavoritesWidgetObject = new FavoritesWidget();
+// console.log(FavoritesWidgetObject); 
+
+ApiConnector.getFavorites(response => {
+
+	// console.log(response);
+	if (response.success) {
+		FavoritesWidgetObject.clearTable();
+		FavoritesWidgetObject.fillTable(response.data);
+		MoneyManagerObject.updateUsersList(response.data);
+	} else { 
+		alert(response.error);
+	}
+
+})
+
+FavoritesWidgetObject.addUserCallback = function(data) {
+
+	ApiConnector.addUserToFavorites(data, response => {
+		if (response.success) {
+			FavoritesWidgetObject.clearTable();
+			FavoritesWidgetObject.fillTable(response.data);
+			MoneyManagerObject.updateUsersList(response.data);
+		} else { 
+			alert(response.error);
+		}
+	})
+
+}
+
+FavoritesWidgetObject.removeUserCallback = function(data) {
+
+	ApiConnector.removeUserFromFavorites(data, response => {
+		if (response.success) {
+			FavoritesWidgetObject.clearTable();
+			FavoritesWidgetObject.fillTable(response.data);
+			MoneyManagerObject.updateUsersList(response.data);
+		} else { 
+			alert(response.error);
+		}
+	})
+
+}

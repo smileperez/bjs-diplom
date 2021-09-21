@@ -14,8 +14,8 @@ UserFormObject.loginFormCallback = function(data) {
 
 }
 
-UserFormObject.registerFormCallback = function(data) 
-{
+UserFormObject.registerFormCallback = function(data) {
+	
 	ApiConnector.register(data, response => {
 		
 		if (response.success) {
