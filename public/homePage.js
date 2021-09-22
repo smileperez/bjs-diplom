@@ -1,3 +1,8 @@
+getStocksEveryMin();
+let interval = setInterval(getStocksEveryMin, 60000);
+
+
+
 const LogoutButtonObject = new LogoutButton();
 // console.log(LogoutButtonObject);
 
@@ -8,6 +13,7 @@ LogoutButtonObject.action = function() {
 		
 		if (response.success) {
 			location.reload();
+			clearInterval(interval);
 			console.log('Вы успешно вышли');
 		} else { 
             alert(response.error);
@@ -40,13 +46,11 @@ function getStocksEveryMin() {
 			RatesBoardObject.clearTable();
 			RatesBoardObject.fillTable(response.data);
 		} else { 
-			alert(response.error);
+			RatesBoardObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);
 		}
 
 	})
 }
-getStocksEveryMin();
-setInterval(getStocksEveryMin, 60000);
 
 
 // Операции с деньгами
@@ -60,7 +64,7 @@ MoneyManagerObject.addMoneyCallback = function(data) {
 			ProfileWidget.showProfile(response.data);
 			console.log('Баланс успешно пополнен');
 		} else { 
-            alert(response.error);
+            MoneyManagerObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);
 		}
 	})
 
@@ -73,7 +77,7 @@ MoneyManagerObject.conversionMoneyCallback = function(data) {
 			ProfileWidget.showProfile(response.data);
 			console.log('Валюта успешно конвертирована успешно');
 		} else { 
-            alert(response.error);
+            MoneyManagerObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);;
 		}
 	})
 
@@ -86,7 +90,7 @@ MoneyManagerObject.sendMoneyCallback = function(data) {
 			ProfileWidget.showProfile(response.data);
 			console.log('Валюта успешно переведна');
 		} else { 
-            alert(response.error);
+            MoneyManagerObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);
 		}
 	})
 
@@ -103,7 +107,7 @@ ApiConnector.getFavorites(response => {
 		FavoritesWidgetObject.fillTable(response.data);
 		MoneyManagerObject.updateUsersList(response.data);
 	} else { 
-		alert(response.error);
+		FavoritesWidgetObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);
 	}
 
 })
@@ -116,7 +120,7 @@ FavoritesWidgetObject.addUserCallback = function(data) {
 			FavoritesWidgetObject.fillTable(response.data);
 			MoneyManagerObject.updateUsersList(response.data);
 		} else { 
-			alert(response.error);
+			FavoritesWidgetObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);
 		}
 	})
 
@@ -130,7 +134,7 @@ FavoritesWidgetObject.removeUserCallback = function(data) {
 			FavoritesWidgetObject.fillTable(response.data);
 			MoneyManagerObject.updateUsersList(response.data);
 		} else { 
-			alert(response.error);
+			FavoritesWidgetObject.setMessage(response.success, `Произошла ошибка: ${response.error}`);
 		}
 	})
 

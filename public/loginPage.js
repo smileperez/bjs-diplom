@@ -8,7 +8,7 @@ UserFormObject.loginFormCallback = function(data) {
 			location.reload();
 			console.log('Вы успешно вошли прошла успешно');
 		} else { 
-            alert(response.error);
+			UserFormObject.setLoginErrorMessage(`Произошла ошибка при логине: ${response.error}`);
 		}
 	})	
 
@@ -22,7 +22,7 @@ UserFormObject.registerFormCallback = function(data) {
 			location.reload();
 			console.log('Регистрация прошла успешно');
 		} else { 
-            alert(response.error);
+            UserFormObject.setLoginErrorMessage(`Произошла ошибка при регистрации: ${response.error}`);
 		}
 	})	
 }
